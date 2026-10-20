@@ -1,6 +1,6 @@
 # co-scientist
 
-**Agent skills that make an AI agent a scientific partner, one that augments human scientists rather than replacing them.**
+**Agent skills that make an AI agent a scientific partner, one that augments human scientists through complementary skills.**
 
 *Version: see [`VERSION`](VERSION). Early and evolving: developed in the open and iterated on through real research projects.*
 
@@ -10,16 +10,16 @@
 
 Human scientists and AI agents are good at different things.
 
-**Humans** are good at judging what is *interesting*: which observation is striking, which question matters to the field, which story is worth pursuing. That comes from domain intuition and from knowing the field from the inside.
+**Humans** are good at judging what is *interesting*: which observation is striking, which question matters to the field, which story is worth pursuing, seeing the bigger picture.
 
 **Humans struggle** with things an agent can do well:
 
 - **Statistical intuition.** Is r = 0.4 with n = 12 meaningful? Is this a real effect or regression to the mean? How many comparisons did we actually make?
 - **Seeing where the data points.** In large result sets, patterns are easy to miss.
 - **Keeping track.** When many analyses produce many numbers, it is hard to remember what has been established, what was assumed, and what the chain of reasoning to a conclusion actually is.
-- **Knowing the literature broadly.** Has this question already been answered? Is there a standard method for this analysis?
+- **Knowing the literature broadly.** Has this or similar questions already been answered? Is there a standard method for this analysis that I am unaware of?
 
-Left to themselves, agents have their own failure modes: numbers without units, composite scores with no stated formula, tables with no captions, conclusions reached too fast, and confident citations that do not exist.
+Left to themselves, agents have their own failure modes: jumping to conclusions too fast, getting side-tracked on minor issues, and over confidence.
 
 `co-scientist` is a set of skills that splits the work along these lines. The human decides what matters and commits to conclusions. The agent checks that those conclusions are grounded, keeps the project's memory, and scouts the data and literature when asked. The aim is synergy: a human–agent team that does better science than either would alone.
 
@@ -35,9 +35,9 @@ Design principles:
 
 - **The agent does not lead the interpretation.** The human looks at the results and records observations first, so the agent's reading does not anchor theirs.
 - **Conclusions are built as explicit chains.** Observations → inferences → conclusion, with every assumption written out and every link checked.
-- **Critique serves the conclusion.** The agent raises issues that would break the chain to the conclusion being tested. Interesting but non-decisive questions are parked, not used to stall progress. If a conclusion cannot be supported, it is narrowed, or the search broadens.
-- **Observed, computed, inferred, assumed and recalled are kept separate.** Recalled literature is a lead to verify, never a citation.
-- **The skills adapt to the scientist.** Per-project working agreements override defaults, and retros turn recurring friction into skill edits.
+- **Critique serves the conclusion.** The agent raises issues that would break the chain to the conclusion being tested. Interesting but non-decisive questions are parked, not used to stall progress. If a conclusion cannot be supported, it is narrowed, or the search broadens. For example checking if arguments or claims have enough statistical support.
+- **Observed, computed, inferred, assumed and recalled are kept separate.** Research is recorded in a ledger, that includes a high level index of what the project is about and which scientific questions are asked, which claims have been made so far, which observations led to the claims, which analyses the observations are based on, the decisions that follow from observations and claims and more.
+- **Continous adaptation.** As AI keeps evolving and as we gather more experience using the co-scientist framework, we will continually update and refine the structure, informing users about newly available updates.
 
 ## The skills
 
