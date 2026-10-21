@@ -188,9 +188,36 @@ the older entries. If a suite upgrade changes conventions in a way that
 affects an existing ledger, note the migration in `retro.md` with both version
 numbers — that line, not the stamp, is the upgrade record.
 
+## Reading the ledger as a page
+
+`ledger_html.py`, in this skill's folder, renders the whole ledger to a single
+self-contained HTML file:
+
+```bash
+python <skill>/ledger_html.py --ledger ledger/ --out ledger/ledger.html
+```
+
+No network, no sibling files, figures embedded: it can be emailed, opened
+offline and archived with the project. One tab per category, every ID is a
+link, and each item carries a **"Referenced by"** list computed from the
+cross-reference graph. That backlink is the reason to generate the page at all
+— the markdown lets you follow `depends on` forwards, never backwards, so from
+a file alone you cannot see which claims an observation holds up.
+
+It is read-only and derives everything from the markdown. Nothing is ever
+written back to the ledger, so regenerating is always safe.
+
+`--no-embed` links figures instead of embedding them, for viewers that refuse
+`data:` URIs; the result is no longer self-contained.
+
 ## Updating
 
 - Update the ledger at the end of each session and after any analysis, new observation, or change in claim status.
+- **After updating the ledger, regenerate the HTML page if the project has one**
+  (`ledger/ledger.html` exists, or the user has asked for it). A stale page is
+  worse than no page: it looks current and is the artefact most likely to be
+  shared with someone who will not check the markdown behind it. Regenerating
+  costs a second and cannot damage the ledger.
 - After updating, tell the user in one or two lines what changed (files and IDs).
 - Keep `00-index.md` status current; it is what the user reads first.
 - **Before editing `claims.md` or `00-index.md`, read the whole file, not just
