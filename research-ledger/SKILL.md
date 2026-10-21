@@ -25,6 +25,7 @@ ledger/
   literature.md      familiarity flags (unverified) and verified references
   parked.md          P1, P2, …  questions that do not affect the current conclusion
   decisions.md       D1, D2, …  choices made and why
+  figures.md         F1, F2, …  figures accepted into the record (optional)
   retro.md           friction log for improving the skills
 ```
 
@@ -100,6 +101,31 @@ caveats belong in `analyses.md` and are reached through `depends on`.
 - result (incl. "no effect found")
 - feeds: O3
 ```
+
+**Figure**
+```
+### F1 — Short title, as a finding not a filename
+- file: figures/fig_data_regime.png
+- supports: C1
+- script: scripts/16_fig_data_regime.py
+- caption: <see below>
+```
+
+`figures.md` is a manifest of figures that have been **reviewed and accepted**,
+not an inventory of the `figures/` folder. Only what is listed here is rendered
+into the HTML page, so a draft plot never appears by accident. Add an entry when
+a figure is one you would put in front of someone.
+
+Figure captions follow `reporting-numbers`, which for a figure means: what each
+axis is and in what unit or range; the equation for any computed or composite
+quantity, with its parameters, and whether they were fitted or chosen; what was
+filtered or selected; n and a spread measure for every aggregate; and what the
+figure does **not** establish. Definitions shared by several figures are stated
+once at the top of `figures.md` rather than repeated in each caption.
+
+A caption that says what the reader should conclude, without saying what was
+measured, has failed. That is the common failure and it looks fine until someone
+asks how a number was computed.
 
 The analyses log must include analyses that found nothing and the number of comparisons in exploratory scans. `stats-check` uses this to account for multiple testing and forking paths.
 
