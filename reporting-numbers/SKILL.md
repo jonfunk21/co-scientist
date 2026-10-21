@@ -63,6 +63,33 @@ Example:
 |---|---|---|---|---|
 | d017 | 0.88 | 91.2 | −11.4 | 0.84 |
 
+## Rule 3b: Figures are captioned like tables, plus their axes
+
+Everything in Rule 3 applies to a figure. Four additions:
+
+1. **Each axis**: what it is, in what unit, and its range if it is a bounded
+   score (`AUROC (0–1, 0.5 = chance)`, `precision@50 (% of 50 tested)`). Say
+   when an axis is log-scaled, and when its units are arbitrary — t-SNE
+   coordinates are unitless and distances between distant clusters mean
+   nothing, so say so rather than letting a reader measure them.
+2. **What a mark means**: colour, size, ring, dash. If a reference line needs
+   no data to compute it, say that — it is why it is a line and not a point.
+3. **n and spread for every aggregate**, including what the ribbon or error
+   bar is (SD, SEM, CI, and over what — splits, replicates, bootstrap
+   resamples).
+4. **What the figure does not establish.** A plot showing curves crossing does
+   not show the crossing is significant; a 2-D projection does not show
+   clusters are real. State the limit in the caption, next to the thing that
+   invites the over-reading, and point to where the test actually lives.
+
+The failure this prevents is a caption that tells the reader what to conclude
+without telling them what was measured. Such captions read well, survive
+review, and cannot be checked.
+
+Definitions shared across several figures (a label's threshold, a composite
+score's formula, how splits were made) are stated **once**, at the top of the
+figure list, not repeated per caption — repetition is how two copies drift.
+
 ## Rule 4 (recommended): Report uncertainty, sample size and precision
 
 - Give n with every aggregate (mean of what, over how many).

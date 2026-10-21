@@ -8,6 +8,29 @@ A ledger stamps the version it was created under in its `00-index.md`
 frontmatter. When you read an old ledger, that stamp tells you which rules were
 in force when it was written.
 
+## v0.5.0 — 2026-10-21
+
+The ledger becomes readable as a page, and figures become part of the record.
+
+- **`research-ledger` ships `ledger_html.py`**: renders a ledger to one
+  self-contained HTML file — tabs per category, every ID a link, figures
+  embedded, no network. Each item gets a *Referenced by* list computed from the
+  cross-reference graph; that backlink does not exist in the markdown and is
+  the reason to generate a page rather than read the files.
+- **`research-ledger`: `figures.md`**, a manifest of figures that have been
+  reviewed and accepted, using the same item grammar as every other ledger
+  file. Only listed figures are rendered, so a draft plot cannot leak into a
+  shared document.
+- **`research-ledger`: regenerate the page whenever the ledger changes.** A
+  stale generated page is worse than none — it is the artefact most likely to
+  reach someone who will not read the markdown behind it.
+- **`reporting-numbers`: Rule 3b**, captions for figures. Axes with units and
+  ranges, what each mark means, n and spread, and what the figure does *not*
+  establish.
+
+Upgrading: nothing breaks. `figures.md` is optional and a ledger without one
+renders fine.
+
 ## v0.4.0 — 2026-10-20
 
 The suite goes public, so that it can be shared with the group and iterated on
