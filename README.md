@@ -44,7 +44,7 @@ Design principles:
 | Skill | Role | Runs |
 |---|---|---|
 | [`co-scientist`](co-scientist/SKILL.md) | Entry point: roles, the research loop, familiarity flags, adaptation and retros | When doing research analysis |
-| [`research-ledger`](research-ledger/SKILL.md) | Project memory: observations, claims, reasoning chain, analyses (including nulls), literature, working agreements. Plain markdown, Obsidian-friendly | Throughout a project |
+| [`research-ledger`](research-ledger/SKILL.md) | Project memory: observations, claims, reasoning chain, analyses (including nulls), literature, figures, working agreements. Plain markdown, Obsidian-friendly. Ships [`ledger_html.py`](research-ledger/ledger_html.py) to render it as a page | Throughout a project |
 | [`reasoning-chain`](reasoning-chain/SKILL.md) | Builds the chain from observations to a conclusion, checks each link, draws it as a Mermaid diagram | When a hypothesis or conclusion is stated |
 | [`stats-check`](stats-check/SKILL.md) | Statistical audit of one claim, including ML leakage checks, with a plain-language verdict | On quantitative links, or on request |
 | [`pattern-scout`](pattern-scout/SKILL.md) | Systematic, multiple-testing-aware scan returning ranked *candidate* patterns | Only on request |
@@ -90,6 +90,31 @@ Install the skills together. `co-scientist` refers to the others by name.
 3. State the conclusion you want to test, and let `reasoning-chain` build and check the path to it.
 4. Put project-specific preferences ("fewer caveats on exploratory plots", "always report Spearman too") in the ledger's *Working agreements*.
 5. At the end of a project, ask for a **retro**. The agent reviews the friction log and proposes skill edits.
+
+## Reading a ledger as a page
+
+A ledger is nine cross-referenced markdown files — good for writing and
+versioning, awkward for reading. `research-ledger` ships a renderer:
+
+```bash
+python research-ledger/ledger_html.py --ledger ledger/ --out ledger/ledger.html
+```
+
+One self-contained HTML file: no network, no sibling assets, figures embedded,
+so it can be emailed and opened offline. A tab per category, every item ID is a
+link, light and dark.
+
+The part that justifies generating it rather than reading the files: each item
+carries a **Referenced by** list, computed from the cross-reference graph. The
+markdown lets you follow `depends on` forwards; it never tells you which claims
+rest on the observation you are about to retract.
+
+Figures are opt-in through `ledger/figures.md`, a manifest of figures that have
+been reviewed and accepted. Only listed figures are rendered, so a draft plot
+never reaches a document someone else reads.
+
+Python 3.9+, standard library only. Pillow, if present, downscales embedded
+figures; without it they embed at full size.
 
 ## Versioning and provenance
 
