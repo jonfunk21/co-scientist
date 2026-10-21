@@ -48,7 +48,12 @@ from pathlib import Path
 
 # `### C1 — Title`. Any letter prefix, so other projects' schemes work.
 ITEM_RE = re.compile(r'^###\s+([A-Z]{1,3})(\d+)\s*[—–-]\s*(.*)$')
-FIELD_RE = re.compile(r'^-\s+\*{0,2}([a-z][a-z0-9 _/-]{0,30})\*{0,2}\s*:\s*(.*)$', re.I)
+# Group 1 is the opening bold marker, if the whole bullet was emphasised as
+# `- **status: ...**`. That form is natural to write and legitimate markdown,
+# but it leaves the closing ** stranded at the end of the VALUE once the key
+# has been parsed off, which then rendered as a literal '**'.
+FIELD_RE = re.compile(
+    r'^-\s+(\*{0,2})([a-z][a-z0-9 _/-]{0,30})\*{0,2}\s*:\s*(.*)$', re.I)
 WIKI_RE = re.compile(r'\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]')
 ID_RE = re.compile(r'\b([A-Z]{1,3}\d+)\b')
 
@@ -100,17 +105,25 @@ class Item:
 
     @property
     def status_short(self):
-        """The badge shows a token, not an essay.
+        """A short token for the badge — never a truncated sentence.
 
-        D2's `status:` field is seven lines of prose explaining how the
-        decision was resolved. Rendered whole it overflowed the badge and made
-        the collapsed row look permanently expanded. The full text is still
-        shown as a field once the item is open.
+        A status is often a sentence: "supported, for close neighbourhoods in
+        this library and assay". Clipping that to fit a badge produced
+        "supported, for close neighbourhoods in this…", which hides the part
+        that qualifies the claim — the half that matters most. So the badge
+        carries only the leading clause, and if even that is long it falls
+        back to the bare status word. The full text is always shown as a
+        field, so nothing is ever only-available-truncated.
         """
         t = re.sub(r'[*_`]', '', self.status).strip()
-        t = re.split(r'(?<=[a-z0-9\)])[.;](?:\s|$)', t)[0]
-        t = t.split(' by ')[0].strip(' ,;:')
-        return clip(t, 46)
+        t = re.split(r'[.,;]', t)[0].strip()
+        if len(t) > 28:
+            low = t.lower()
+            for word, _ in STATUS_CLASS:
+                if word in low:
+                    return word
+            t = t.split()[0] if t.split() else t
+        return t
 
     def status_class(self):
         s = self.status.lower()
@@ -177,8 +190,10 @@ def parse_file(path):
             # A field bullet only counts before any free prose/table starts,
             # otherwise "- source: x" inside a table would be swallowed.
             if fm_match and not cur_item.body:
-                cur_item.fields.append([fm_match.group(1).strip(),
-                                        fm_match.group(2).strip()])
+                key, val = fm_match.group(2).strip(), fm_match.group(3).strip()
+                if fm_match.group(1) == '**' and val.endswith('**'):
+                    val = val[:-2].rstrip()
+                cur_item.fields.append([key, val])
                 in_field = True
             elif (in_field and not in_fence and cur_item.fields
                   and not cur_item.body and re.match(r'^\s{2,}\S', raw)):
@@ -444,8 +459,8 @@ padding:18px 20px;margin:12px 0;box-shadow:var(--shadow);scroll-margin-top:62px}
 .cid{font:650 12px/1 inherit;color:var(--accent);background:var(--chip);
 padding:4px 7px;border-radius:5px;letter-spacing:.03em}
 .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;
-background:var(--chip);color:var(--ink2);letter-spacing:.02em;white-space:nowrap;
-flex:0 0 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+background:var(--chip);color:var(--ink2);letter-spacing:.02em;
+flex:0 1 auto;max-width:100%}
 .badge.good{color:var(--good)}.badge.warn{color:var(--warn)}
 .badge.bad{color:var(--bad)}.badge.open{color:var(--accent)}
 dl{margin:10px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);
@@ -593,9 +608,10 @@ def render(ledger_dir, out_path, repo_root, max_width=1600, link_figs=False):
     def fields_of(it):
         rows = []
         for k, v in it.fields:
-            if k.lower() == 'status' and it.status_short == re.sub(
-                    r'[*_`]', '', v).strip():
-                continue          # already said in full by the badge
+            if k.lower() == 'status':
+                full = re.sub(r'[*_`]', '', v).strip()
+                if it.status_short == full:
+                    continue      # the badge already says all of it
             rows.append(f'<dt>{html.escape(k)}</dt><dd>{inline(v, items)}</dd>')
         return f'<dl>{"".join(rows)}</dl>' if rows else ''
 
