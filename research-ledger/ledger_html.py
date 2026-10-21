@@ -537,6 +537,7 @@ JS = """
 
  var P=[].slice.call(document.querySelectorAll('[data-page]'));
  if(!P.length)return;
+
  function show(slug){
   if(!P.some(function(p){return p.dataset.page===slug;}))slug=P[0].dataset.page;
   P.forEach(function(p){p.hidden=p.dataset.page!==slug;});
@@ -545,21 +546,41 @@ JS = """
   [].forEach.call(document.querySelectorAll('.tab'),function(a){
    a.classList.toggle('on',a.dataset.go===slug);});
  }
- function go(){
-  var h=decodeURIComponent(location.hash.slice(1));
-  if(h.charAt(0)==='/'){show(h.slice(1));scrollTo(0,0);return;}
+
+ function nav(h){
   if(!h)return;
+  if(h.charAt(0)==='/'){show(h.slice(1));scrollTo(0,0);return;}
   var slug=PAGE[h]||(h.indexOf('s-')===0?'overview':null);
   if(slug)show(slug);
   var el=document.getElementById(h);
   if(!el)return;
-  var x=el.closest('details');
+  var x=el.closest?el.closest('details'):null;
   while(x){x.open=true;x=x.parentElement&&x.parentElement.closest('details');}
   if(el.tagName==='DETAILS')el.open=true;
   el.scrollIntoView({block:'start'});
  }
- addEventListener('hashchange',go);
- if(document.readyState!=='loading')go();else addEventListener('DOMContentLoaded',go);
+
+ // Navigate on the click itself rather than waiting for a hashchange event.
+ // Embedded viewers (IDE preview panes, some mail clients) often do not update
+ // location.hash for in-page links on file:// URLs, and the whole tab bar then
+ // does nothing. Handling the click directly makes navigation independent of
+ // that; the hash is still updated so links remain copyable, and hashchange is
+ // still handled for back/forward and for a URL typed with a fragment.
+ document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a[href^="#"]'):null;
+  if(!a)return;
+  var t=a.getAttribute('href').slice(1);
+  if(!t)return;
+  e.preventDefault();
+  nav(t);
+  try{history.replaceState(null,'','#'+t);}catch(_){ }
+ });
+
+ addEventListener('hashchange',function(){
+  nav(decodeURIComponent(location.hash.slice(1)));});
+ function start(){nav(decodeURIComponent(location.hash.slice(1)));}
+ if(document.readyState!=='loading')start();
+ else addEventListener('DOMContentLoaded',start);
 })();
 """
 
