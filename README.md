@@ -51,6 +51,7 @@ Design principles:
 | [`literature-scan`](literature-scan/SKILL.md) | Literature search with verified references only and a documented search log | Only on request |
 | [`reporting-numbers`](reporting-numbers/SKILL.md) | Units, equations for computed values, table captions, provenance | Whenever numbers are reported |
 | [`co-scientist-update`](co-scientist-update/SKILL.md) | Checks this repo for new versions, explains what changed and why, installs only on agreement | On request or a scheduled check |
+| [`data-bundle`](data-bundle/SKILL.md) | Turning a project's scattered data into one citable bundle: what to include, manifest and checksums, resolving code paths from it, proving it is sufficient | At submission, archiving or handover |
 
 ## The research loop
 

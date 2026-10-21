@@ -8,6 +8,30 @@ A ledger stamps the version it was created under in its `00-index.md`
 frontmatter. When you read an old ledger, that stamp tells you which rules were
 in force when it was written.
 
+## v0.6.0 — 2026-10-21
+
+New skill: **`data-bundle`**, for the point where a project's data has to
+become something other people can use.
+
+Written from doing it once. A project had its data in four unrelated places
+plus symlinks into a differently-named tree holding 46 GB of raw prediction
+output. The rules that turned out to matter:
+
+- Decide how much raw output to include by asking what each artefact is *for*,
+  and **state the exclusions and the reason** — a reader meeting absence cannot
+  tell a scope decision from an oversight.
+- A manifest with a SHA-256 and a provenance path per file, and a verification
+  snippet in the README so checking is one paste.
+- Resolve inputs from the bundle when present, falling back to the original
+  location when not. The builder must read the originals explicitly, or once
+  the bundle exists it copies the bundle onto itself and records it as its own
+  provenance — silently, passing every test.
+- **Prove sufficiency in a clean room**: point the project root at an empty
+  directory and run. On the machine that built it the fallback hides every gap.
+- Staging, durable and citable are three different copies. Say which exist.
+
+Nothing else changes; no existing skill is affected.
+
 ## v0.5.0 — 2026-10-21
 
 The ledger becomes readable as a page, and figures become part of the record.

@@ -33,6 +33,7 @@ Principles:
 | `pattern-scout` | Systematic scan for candidate patterns | **Only when the user asks** |
 | `literature-scan` | Verified search of prior work | **Only when the user asks** (possibly after a familiarity flag) |
 | `co-scientist-update` | Check GitHub for changes to this suite, report what changed and why | When the user asks, or when a scheduled daily check fires |
+| `data-bundle` | Collect the project's data into one citable bundle with a manifest, and point the code at it | Paper submission, archiving, handover, or a reproducibility request |
 
 There is no formal call mechanism between skills: when a step needs a sub-skill, load and follow it.
 
