@@ -27,9 +27,16 @@ ledger/
   decisions.md       D1, D2, …  choices made and why
   figures.md         F1, F2, …  figures accepted into the record (optional)
   retro.md           friction log for improving the skills
+
+  method-development projects (see experiment-gate):
+  charter.md         G1, G2, …  goals, reference model, budget, phase, definition of done
+  harness.md         H1, H2, …  frozen evaluation sets, scoring, reference results, noise
+  experiments.md     E1, E2, …  experiment cards, written before the run
+  probes.md          PR1, …     exploratory probes
+  archive/                      closed cards after a roll-up (not rendered by default)
 ```
 
-Small projects may use only `00-index.md`, `observations.md`, `chain.md`, `analyses.md`. Create other files when first needed.
+Small projects may use only `00-index.md`, `observations.md`, `chain.md`, `analyses.md`. Create other files when first needed. Templates for the method-development files are in `experiment-gate`.
 
 ## Format conventions
 
@@ -155,6 +162,9 @@ repository: https://github.com/jonfunk21/co-scientist
 ## Question
 <one or two sentences>
 
+## Mode
+analysis | method development
+
 ## Current target conclusion
 <C-id and one sentence> — status
 
@@ -187,6 +197,22 @@ version the ledger was *created* under, which is what explains the shape of
 the older entries. If a suite upgrade changes conventions in a way that
 affects an existing ledger, note the migration in `retro.md` with both version
 numbers — that line, not the stamp, is the upgrade record.
+
+## Team projects
+
+When several people share a ledger through git, keep it mergeable:
+
+- **Merge ledger entries to main early,** in small commits separate from code, so results are visible to everyone and branches do not accumulate unmerged entries.
+- **IDs are stable once on main.** If two branches create the same new ID, whoever merges second renumbers their own not-yet-merged items before merging. Items already on main are never renumbered.
+- **Shared files change through review.** `00-index.md`, `charter.md` and `harness.md` are edited on main through pull requests, not inside experiment branches.
+- Add an `owner` line to experiment and probe cards so it is clear who ran what.
+
+## Keeping the ledger small
+
+- Link to logs, curves and configs; do not copy them in.
+- One experiment card per question, not per run.
+- At milestones, roll closed experiment cards up into a claim and move them to `archive/`. Moving is allowed; deleting is not.
+- By default read the index, claims, chain and open cards; open `archive/` when the question needs it.
 
 ## Reading the ledger as a page
 

@@ -27,13 +27,14 @@ Left to themselves, agents have their own failure modes: jumping to conclusions 
 
 | | Human scientist | Agent |
 |---|---|---|
-| **Decides** | What is interesting; which story to pursue; the final conclusion | Nothing final: it proposes, checks and records |
+| **Decides** | What is interesting; which story to pursue; the call on next steps and conclusions | Nothing on its own: it interprets, proposes, checks and records |
 | **Brings** | Domain intuition; judgement of significance | Statistics; systematic search across data; disciplined record-keeping (via the ledger); broad recall of prior work |
-| **Agent's roles** | | **Auditor** (is it grounded?) · **Memory** (ledger, reasoning chain) · **Scout** (only on request) |
+| **Agent's roles** | | **Partner in interpretation** (labelled readings) · **Auditor** (is it grounded?) · **Memory** (ledger, reasoning chain) · **Scout** (only on request) |
 
 Design principles:
 
-- **The agent does not lead the interpretation.** The human looks at the results and records observations first, so the agent's reading does not anchor theirs.
+- **Interpretation is joint.** The human records first impressions, then the agent offers its own reading, labelled and kept separate from observations. Disagreements stay visible, and the human makes the call on next steps.
+- **Proportionate suggestions.** Most of the time no suggestion is needed; the agent speaks up when something could change a conclusion, a goal or a decision already taken, and keeps smaller ideas parked.
 - **Conclusions are built as explicit chains.** Observations → inferences → conclusion, with every assumption written out and every link checked.
 - **Critique serves the conclusion.** The agent raises issues that would break the chain to the conclusion being tested. Interesting but non-decisive questions are parked, not used to stall progress. If a conclusion cannot be supported, it is narrowed, or the search broadens. For example checking if arguments or claims have enough statistical support.
 - **Observed, computed, inferred, assumed and recalled are kept separate.** Research is recorded in a ledger, that includes a high level index of what the project is about and which scientific questions are asked, which claims have been made so far, which observations led to the claims, which analyses the observations are based on, the decisions that follow from observations and claims and more.
@@ -52,6 +53,7 @@ Design principles:
 | [`reporting-numbers`](reporting-numbers/SKILL.md) | Units, equations for computed values, table captions, provenance | Whenever numbers are reported |
 | [`co-scientist-update`](co-scientist-update/SKILL.md) | Checks this repo for new versions, explains what changed and why, installs only on agreement | On request or a scheduled check |
 | [`data-bundle`](data-bundle/SKILL.md) | Turning a project's scattered data into one citable bundle: what to include, manifest and checksums, resolving code paths from it, proving it is sufficient | At submission, archiving or handover |
+| [`experiment-gate`](experiment-gate/SKILL.md) | Method development: charter, eval harness, experiment and probe cards, pre-flight checks before a launch, the suggestion bar, branch hygiene in shared repos | Method-development projects: before a launch, when results land, at milestones |
 
 ## The research loop
 

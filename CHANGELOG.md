@@ -8,6 +8,51 @@ A ledger stamps the version it was created under in its `00-index.md`
 frontmatter. When you read an old ledger, that stamp tells you which rules were
 in force when it was written.
 
+## v0.7.0 — 2026-11-05
+
+Method development gets its own mode, and the agent becomes a fuller partner in
+interpretation.
+
+Observed behaviour that prompted this:
+
+- **The agent stopped interpreting.** "The agent does not lead the
+  interpretation" was applied as "the agent never interprets": results were
+  reported in tables and then left there.
+- **The agent stopped contributing ideas.** The suite was made cautious after
+  earlier agents treated small findings as pivotal and pulled the user into
+  side paths. It swung too far: next steps were rarely suggested at all.
+- **Method-development work drifted.** In model-building projects, runs were
+  launched without a trusted evaluation or a clear purpose, and multi-person
+  branches drifted until they were hard to merge.
+
+Changes:
+
+- **New skill: `experiment-gate`.** Charter, eval harness, experiment cards
+  written before the run, lightweight probe cards for exploration, a pre-flight
+  check before launches (harness, card, smoke test, leakage, proxy first, branch
+  divergence), a suggestion bar tied to the charter and project phase, a drift
+  check, and branch hygiene for shared repos. It warns and explains rather than
+  blocks, so newcomers learn the reasons.
+- **`co-scientist`: two kinds of project.** Analysis and method development;
+  the agent says which mode it is in and switches on request. New-member
+  briefing at session start.
+- **`co-scientist`: interpretation is joint.** After the user's first
+  impressions, the agent offers a labelled reading at three scales (per result,
+  when a line of work closes, at milestones).
+- **`co-scientist`: speaking up.** Most of the time no suggestion is needed;
+  raise one when it could change a conclusion, a goal or a decision, usually one
+  rather than a menu, in a calm tone. Smaller ideas go to `parked.md`.
+- **`research-ledger`:** optional method-development files (`charter.md`,
+  `harness.md`, `experiments.md`, `probes.md`, `archive/`), a `Mode` line in
+  `00-index.md`, rules for team ledgers shared through git, and guidance on
+  keeping the ledger small.
+- **`stats-check`:** leakage checks include pretrained foundation models; gains
+  are compared with measured harness noise.
+
+Upgrading: nothing breaks. The new ledger files are optional and render with
+`ledger_html.py` like any other file; `archive/` is not rendered. Existing
+ledgers can add a `Mode` line to `00-index.md` when convenient.
+
 ## v0.6.0 — 2026-10-21
 
 New skill: **`data-bundle`**, for the point where a project's data has to

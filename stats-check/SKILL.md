@@ -44,6 +44,8 @@ Go through these; report only the ones that matter for this claim.
 - Hyperparameters or model selection tuned on the test set.
 - Proxy validity: does the metric track the property claimed?
 - Benchmark comparability: same data splits, same preprocessing, same compute budget.
+- Pretrained or foundation models: could evaluation targets be in their training data? Check deposition dates and published splits, not only your own split.
+- Gain versus harness noise: an improvement smaller than the measured seed-to-seed or rerun spread of the reference is not yet evidence.
 
 **Confounders**
 - Batch, date, operator, length, composition, any variable correlated with both groups.
