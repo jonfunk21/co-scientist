@@ -8,7 +8,9 @@ A ledger stamps the version it was created under in its `00-index.md`
 frontmatter. When you read an old ledger, that stamp tells you which rules were
 in force when it was written.
 
-## Unreleased — proposed
+## v0.8.0 — 2026-11-09
+
+The ledger gets a mechanical check, and delegated work is rewritten before it is recorded.
 
 Observed behaviour that prompted this (a long method-development session,
 2026-11-09, ledger created under v0.1.0 and migrated to v0.7.0):

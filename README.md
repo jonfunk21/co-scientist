@@ -119,6 +119,19 @@ never reaches a document someone else reads.
 Python 3.9+, standard library only. Pillow, if present, downscales embedded
 figures; without it they embed at full size.
 
+## Checking a ledger
+
+`research-ledger` also ships a linter for the ledger rules (closed claim fields,
+IDs, dangling references, undefined code names, near-duplicates, aggregates
+without n, stale page):
+
+```bash
+python research-ledger/ledger_lint.py --ledger ledger/
+```
+
+In Claude Code it can run after every ledger edit as a `PostToolUse` hook; see
+`research-ledger/hooks/ledger_lint_hook.sh`.
+
 ## Versioning and provenance
 
 The suite has one version for all its skills. They are used together, and a ledger is written by several of them at once.
