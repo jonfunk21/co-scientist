@@ -87,6 +87,17 @@ new data/analysis → report (reporting-numbers)
   every step → research-ledger
 ```
 
+**Delegated work.** A report from a subagent or another tool is raw material,
+not a ledger entry. Before anything from it enters the ledger, rewrite it in the
+ledger's vocabulary and through the `reporting-numbers` checklist: units, n,
+formulas, definitions for every code name, and which numbers were computed and
+which inferred. Subagent reports are written for the agent that commissioned
+them, in that agent's shorthand; pasted in verbatim, they make the ledger
+unreadable to the user, and the shorthand compounds as a session gets longer.
+
+**Before saying the ledger is updated**, run `ledger_lint.py` (see
+`research-ledger`) and fix what it reports.
+
 **Light path.** For a quick question ("is this correlation meaningful?"), use only the relevant sub-skill. Do not force the full loop. Still log to the ledger if one exists.
 
 **End of session**

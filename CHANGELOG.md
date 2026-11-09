@@ -8,6 +8,37 @@ A ledger stamps the version it was created under in its `00-index.md`
 frontmatter. When you read an old ledger, that stamp tells you which rules were
 in force when it was written.
 
+## Unreleased — proposed
+
+Observed behaviour that prompted this (a long method-development session,
+2026-11-09, ledger created under v0.1.0 and migrated to v0.7.0):
+
+- **Ledger entries became unreadable.** Observations used undefined code names
+  (`E_des_pr`, `int_ljatr`, κ²), unitless numbers and arrow chains. Most of it
+  came from subagent reports pasted in with light editing.
+- **The record drifted from the rules without any one edit being wrong.**
+  Claims grew extra fields, near-duplicate observations accumulated, and merged
+  items were deleted, which left dangling `feeds` references.
+- **A stale install went unnoticed.** The session ran a skill copy from
+  2026-10-19 (v0.1.0) while the repo was at v0.7.0.
+
+Changes:
+
+- **`research-ledger`: `ledger_lint.py`.** A mechanical check of the ledger
+  rules (closed claim fields and budget, ID placement and uniqueness, dangling
+  references, undefined code names, near-duplicates, aggregates without n,
+  stale page), plus an example Claude Code hook that runs it and regenerates
+  `ledger.html` after every ledger edit.
+- **`research-ledger`: definitions and run tables** at the top of
+  `observations.md` once a project has its own vocabulary.
+- **`research-ledger`: merging near-duplicates leaves a pointer item**, never a
+  deleted heading.
+- **`co-scientist`: delegated work is rewritten before it enters the ledger**,
+  and the lint runs before the agent reports the ledger as updated.
+
+Upgrading: nothing breaks. The linter is optional and read-only; on an existing
+ledger, expect findings for vocabulary that was never defined.
+
 ## v0.7.0 — 2026-11-05
 
 Method development gets its own mode, and the agent becomes a fuller partner in

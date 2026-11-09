@@ -54,6 +54,15 @@ Small projects may use only `00-index.md`, `observations.md`, `chain.md`, `analy
   and is reached through `depends on`. Numbers migrate upward if you let them:
   each is quoted into the claim for a good local reason, and the file ends up
   restating the observations file in a worse format.
+- **Define project vocabulary once, at the top of `observations.md`.** As soon as
+  the ledger uses a project-specific metric, a code identifier (`E_des_pr`,
+  `beta_kl`) or a run nickname, `observations.md` opens with a captioned
+  definitions table (term, what it is, unit or scale, which direction is better,
+  formula for computed ones) and, if runs are named, a run table (short name,
+  path, what the run was, n). Entries then use those terms in plain sentences.
+  A code name that is not in the table is either defined there or wrapped in
+  backticks as a literal path or key. Without this, entries written over a long
+  session become readable only to the agent that wrote them.
 - Dates as ISO (`2026-10-19`).
 - **Append-only applies to the record, not to the conclusions.**
   `observations.md`, `analyses.md`, `decisions.md` and `literature.md` are an
@@ -213,6 +222,32 @@ When several people share a ledger through git, keep it mergeable:
 - One experiment card per question, not per run.
 - At milestones, roll closed experiment cards up into a claim and move them to `archive/`. Moving is allowed; deleting is not.
 - By default read the index, claims, chain and open cards; open `archive/` when the question needs it.
+
+- Near-duplicate observations are merged by adding the content to the surviving
+  item and turning the other into a **pointer**: keep its heading and ID, and
+  replace the body with one line, `- status: merged into O7 on <date>`. Never
+  remove the heading — `depends on` and `feeds` lines elsewhere still point at it.
+
+## Checking the ledger
+
+`ledger_lint.py`, next to the renderer, checks the rules in this file mechanically:
+
+```bash
+python <skill>/ledger_lint.py --ledger ledger/          # --strict: exit 1 on findings
+```
+
+It reports `<file>:<line> [rule] message` for: missing frontmatter or
+provenance stamp; claims outside the closed field set or over budget; IDs in the
+wrong file or defined twice; `depends on` / wikilinks that do not resolve;
+code-like names that are not in the definitions table; near-duplicate titles; an
+aggregate with no sample size; and a stale `ledger.html`. Standard library only.
+
+Run it before telling the user the ledger is updated, and before committing
+ledger changes. These rules erode one reasonable edit at a time, and none of
+the erosions shows up in a diff; a check after every edit catches them while
+they are still one line. In Claude Code this can run automatically as a
+`PostToolUse` hook on `Edit|Write` (example: `hooks/ledger_lint_hook.sh`), which
+feeds findings back to the agent and regenerates `ledger.html`.
 
 ## Reading the ledger as a page
 
